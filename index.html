@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FAQ Chatbot</title>
+<style>
+    :root {
+        --primary: #4f6df5;
+        --bg: #f4f6fb;
+        --card: #ffffff;
+        --text: #1e2233;
+        --muted: #6b7280;
+        --border: #e2e5ee;
+        --bot-bubble: #eef1fb;
+        --user-bubble: #4f6df5;
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 15px;
+    }
+    .chat-container {
+        background: var(--card);
+        width: 100%;
+        max-width: 560px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(20,20,50,0.08);
+        display: flex;
+        flex-direction: column;
+        height: 640px;
+        overflow: hidden;
+    }
+    .chat-header {
+        background: var(--primary);
+        color: #fff;
+        padding: 18px 22px;
+    }
+    .chat-header h1 { margin: 0; font-size: 18px; }
+    .chat-header p { margin: 4px 0 0; font-size: 12px; opacity: 0.85; }
+
+    .messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .msg {
+        max-width: 78%;
+        padding: 10px 14px;
+        border-radius: 14px;
+        font-size: 14px;
+        line-height: 1.45;
+        white-space: pre-wrap;
+    }
+    .msg.bot {
+        background: var(--bot-bubble);
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+    }
+    .msg.user {
+        background: var(--user-bubble);
+        color: #fff;
+        align-self: flex-end;
+        border-bottom-right-radius: 4px;
+    }
+    .msg.bot .matched {
+        display: block;
+        margin-top: 6px;
+        font-size: 11px;
+        color: var(--muted);
+        font-style: italic;
+    }
+
+    .composer {
+        display: flex;
+        border-top: 1px solid var(--border);
+        padding: 12px;
+        gap: 10px;
+    }
+    .composer input {
+        flex: 1;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-size: 14px;
+        outline: none;
+    }
+    .composer button {
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        padding: 0 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .composer button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .typing {
+        align-self: flex-start;
+        font-size: 12px;
+        color: var(--muted);
+        padding-left: 4px;
+    }
+</style>
+</head>
+<body>
+<div class="chat-container">
+    <div class="chat-header">
+        <h1>💬 FAQ Chatbot</h1>
+        <p>Ask me anything &mdash; trained on {{ faq_count }} frequently asked questions.</p>
+    </div>
+    <div class="messages" id="messages">
+        <div class="msg bot">Hi! I can answer common questions about orders, returns, payments, accounts and more. What would you like to know?</div>
+    </div>
+    <div class="composer">
+        <input type="text" id="userInput" placeholder="Type your question..." autofocus>
+        <button id="sendBtn">Send</button>
+    </div>
+</div>
+
+<script>
+const messagesEl = document.getElementById('messages');
+const userInput = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+
+function addMessage(text, sender, matchedQuestion) {
+    const div = document.createElement('div');
+    div.className = 'msg ' + sender;
+    div.textContent = text;
+    if (matchedQuestion) {
+        const small = document.createElement('span');
+        small.className = 'matched';
+        small.textContent = 'Matched FAQ: "' + matchedQuestion + '"';
+        div.appendChild(small);
+    }
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+async function sendMessage() {
+    const text = userInput.value.trim();
+    if (!text) return;
+
+    addMessage(text, 'user');
+    userInput.value = '';
+    sendBtn.disabled = true;
+
+    const typingEl = document.createElement('div');
+    typingEl.className = 'typing';
+    typingEl.textContent = 'Bot is typing...';
+    messagesEl.appendChild(typingEl);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+
+    try {
+        const res = await fetch('/ask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text })
+        });
+        const data = await res.json();
+        typingEl.remove();
+
+        if (!res.ok) {
+            addMessage(data.error || 'Something went wrong.', 'bot');
+        } else {
+            addMessage(data.answer, 'bot', data.matched_question);
+        }
+    } catch (err) {
+        typingEl.remove();
+        addMessage('Network error, please try again.', 'bot');
+    } finally {
+        sendBtn.disabled = false;
+        userInput.focus();
+    }
+}
+
+sendBtn.addEventListener('click', sendMessage);
+userInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') sendMessage();
+});
+</script>
+</body>
+</html>
