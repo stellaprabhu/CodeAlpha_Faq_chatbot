@@ -1,0 +1,77 @@
+[
+  {
+    "question": "What are your business hours?",
+    "answer": "Our support team is available Monday to Friday, 9 AM to 6 PM (local time). We are closed on public holidays.",
+    "keywords": "open close timing available working hours"
+  },
+  {
+    "question": "How do I reset my password?",
+    "answer": "Go to the login page and click 'Forgot Password'. Enter your registered email address and follow the link we send you to create a new password.",
+    "keywords": "forgot login credentials cant sign in access account"
+  },
+  {
+    "question": "How can I track my order?",
+    "answer": "Once your order ships, you'll receive a tracking link by email. You can also track it anytime from the 'My Orders' section in your account.",
+    "keywords": "package arrive status shipment where is my order tracking number"
+  },
+  {
+    "question": "What is your return policy?",
+    "answer": "You can return most items within 30 days of delivery for a full refund, as long as they are unused and in their original packaging.",
+    "keywords": "send back exchange unwanted item policy"
+  },
+  {
+    "question": "How do I cancel my subscription?",
+    "answer": "Go to Account Settings > Subscription > Cancel Subscription. Your plan will remain active until the end of the current billing cycle.",
+    "keywords": "stop membership unsubscribe end plan billing"
+  },
+  {
+    "question": "Do you offer refunds?",
+    "answer": "Yes, refunds are issued to your original payment method within 5-7 business days after we receive and inspect the returned item.",
+    "keywords": "money back reimbursement get my money"
+  },
+  {
+    "question": "How can I contact customer support?",
+    "answer": "You can reach us via live chat on our website, by emailing support@example.com, or by calling our helpline during business hours.",
+    "keywords": "help talk human reach team phone email chat"
+  },
+  {
+    "question": "Do you ship internationally?",
+    "answer": "Yes, we ship to over 50 countries. International shipping costs and delivery times vary depending on your location.",
+    "keywords": "abroad overseas other countries deliver worldwide"
+  },
+  {
+    "question": "How long does delivery take?",
+    "answer": "Standard delivery usually takes 3-5 business days domestically, and 7-14 business days for international orders.",
+    "keywords": "arrive when shipping time duration days"
+  },
+  {
+    "question": "What payment methods do you accept?",
+    "answer": "We accept major credit/debit cards, PayPal, and other regional payment options shown at checkout.",
+    "keywords": "pay card paypal checkout accepted options"
+  },
+  {
+    "question": "Can I change my shipping address after placing an order?",
+    "answer": "You can update your shipping address within 1 hour of placing the order by contacting support, as long as it hasn't shipped yet.",
+    "keywords": "update wrong address edit modify order"
+  },
+  {
+    "question": "Is my personal information secure?",
+    "answer": "Yes, we use industry-standard encryption to protect your personal and payment information, and we never share your data with third parties without consent.",
+    "keywords": "privacy safe data protection security"
+  },
+  {
+    "question": "How do I create an account?",
+    "answer": "Click 'Sign Up' at the top of the page, enter your email and a password, and verify your email address to activate your account.",
+    "keywords": "sign up register new account join"
+  },
+  {
+    "question": "Do you have a mobile app?",
+    "answer": "Yes, our mobile app is available for both Android and iOS. You can download it from the Google Play Store or Apple App Store.",
+    "keywords": "app android ios download install phone application"
+  },
+  {
+    "question": "What should I do if I received a damaged item?",
+    "answer": "Please contact support within 48 hours of delivery with photos of the damaged item, and we'll arrange a replacement or refund.",
+    "keywords": "broken defective faulty damaged item wrong item"
+  }
+]
